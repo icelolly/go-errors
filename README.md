@@ -1,4 +1,4 @@
-# go-errors ![Report Card](https://goreportcard.com/badge/github.com/icelolly/go-errors)
+# go-errors [![Go Report Card badge]][Go Report Card] [![GoDoc Badge]][GoDoc]
 
 This package aims to provide flexible general-purpose error handling functionality, with the 
 following specific features in mind:
@@ -23,3 +23,9 @@ them, handling different kinds of errors, and dealing with things like logging.
 
 
 [1]: https://github.com/upspin/upspin/blob/master/errors/errors.go#L23
+
+[GoDoc]: https://godoc.org/github.com/icelolly/go-errors
+[GoDoc Badge]: https://godoc.org/github.com/icelolly/go-errors?status.svg
+
+[Go Report Card]: https://goreportcard.com/report/github.com/icelolly/go-errors
+[Go Report Card Badge]: https://goreportcard.com/badge/github.com/icelolly/go-errors
