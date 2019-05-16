@@ -1,4 +1,4 @@
-# go-errors
+# go-errors ![Report Card](https://goreportcard.com/badge/github.com/icelolly/go-errors)
 
 This package aims to provide flexible general-purpose error handling functionality, with the 
 following specific features in mind:
