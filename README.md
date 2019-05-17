@@ -1,4 +1,4 @@
-# go-errors [![Go Report Card badge]][Go Report Card] [![GoDoc Badge]][GoDoc]
+# go-errors [![Travis Build Badge]][Travis Build] [![Go Report Card Badge]][Go Report Card] [![GoDoc Badge]][GoDoc]
 
 This package aims to provide flexible general-purpose error handling functionality, with the 
 following specific features in mind:
@@ -29,3 +29,6 @@ them, handling different kinds of errors, and dealing with things like logging.
 
 [Go Report Card]: https://goreportcard.com/report/github.com/icelolly/go-errors
 [Go Report Card Badge]: https://goreportcard.com/badge/github.com/icelolly/go-errors
+
+[Travis Build]: https://travis-ci.org/icelolly/go-errors
+[Travis Build Badge]: https://api.travis-ci.org/icelolly/go-errors.svg?branch=master
