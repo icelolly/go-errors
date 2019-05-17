@@ -16,9 +16,9 @@ found elsewhere in the community, most notably the approach found in [Upspin][1]
 ### Creating and Wrapping Errors
 
 Errors may have a few different pieces of information attached to them; an `errors.Kind`, a message,
-and fields. Along with this information, file and line information will be added automatically. All
-of these things are optional, but at least an `errors.Kind` _or_ message must be given if using
-`errors.New`. If you're wrapping an error, the only thing you must pass is an error to wrap as the
+and fields. All of these things are optional, but at least an `errors.Kind` _or_ message must be 
+given if using `errors.New`. Along with this information, file and line information will be added 
+automatically. If you're wrapping an error, the only thing you must pass is an error to wrap as the
 first argument:
 
 ```go
