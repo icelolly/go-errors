@@ -6,6 +6,7 @@ import (
 	"io"
 	"testing"
 
+	cockroachdb "github.com/cockroachdb/errors"
 	"github.com/stretchr/testify/assert"
 )
 
@@ -202,7 +203,22 @@ func BenchmarkNew(b *testing.B) {
 	b.ResetTimer()
 
 	for i := 0; i < b.N; i++ {
-		err = New(io.EOF, Kind("bench"), "benchmarking")
+		err = New("benchmarking")
+	}
+
+	_ = err
+}
+
+func BenchmarkNewCockroachDB(b *testing.B) {
+	var err error
+
+	b.ReportAllocs()
+	b.ResetTimer()
+
+	for i := 0; i < b.N; i++ {
+		// We automatically add a stack trace when creating or wrapping an error, rather than
+		// creating another layer of error.
+		err = cockroachdb.WithStack(cockroachdb.New("benchmarking"))
 	}
 
 	_ = err
