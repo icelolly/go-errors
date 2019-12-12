@@ -1,6 +1,7 @@
 package errors
 
 import (
+	"context"
 	"errors"
 	"strings"
 	"testing"
@@ -243,9 +244,17 @@ func TestFieldsSlice(t *testing.T) {
 	})
 }
 
+type errorType struct {}
+
+func (t errorType) Error() string {
+	return "error!"
+}
+
+
 func TestIs(t *testing.T) {
 	kind1 := Kind("testing 1")
 	kind2 := Kind("testing 2")
+	kind3 := errorType{}
 
 	t.Run("should return false on nil error", func(t *testing.T) {
 		assert.False(t, Is(nil))
@@ -279,6 +288,14 @@ func TestIs(t *testing.T) {
 	t.Run("should test for the first of any given kinds", func(t *testing.T) {
 		err := Wrap(New(kind1))
 		assert.True(t, Is(err, kind2, kind1))
+	})
+
+	t.Run("should also be able to check value types", func(t *testing.T) {
+		err := Wrap(kind3)
+		assert.True(t, Is(err, kind3))
+
+		err = Wrap(context.Canceled)
+		assert.True(t, Is(err, context.Canceled))
 	})
 }
 

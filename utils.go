@@ -104,22 +104,34 @@ func FieldsSlice(err error) []interface{} {
 	return fields
 }
 
-// Is reports whether err is an *Error of the given Kind(s). If the given error is an *Error, but
-// it has an empty kind, it will check the cause of that error recursively. If error is not an
-// *Error, or is nil, Is will return false.
-func Is(err error, kind ...Kind) bool {
+// Is reports whether the err is an *Error of the given kind/value. If the given kind is of type Kind/string, it will be
+// checked against the error's Kind. If the given kind is of any other type, it will be checked against the error's
+// cause. This is done recursively until a matching error is found. Calling Is with multiple kinds reports whether the
+// error is one of the given kind/values, not all of.
+func Is(err error, kind ...interface{}) bool {
 	if err == nil {
 		return false
 	}
 
 	e, ok := err.(*Error)
-	if ok && e.Kind != "" {
-		for _, k := range kind {
-			if e.Kind == k {
+	if !ok {
+		return false
+	}
+
+	for _, k := range kind {
+		switch val := k.(type) {
+		case Kind, string:
+			if e.Kind == val {
+				return true
+			}
+		default:
+			if e.Cause == val {
 				return true
 			}
 		}
-	} else if ok && e.Cause != nil {
+	}
+
+	if e.Cause != nil {
 		return Is(e.Cause, kind...)
 	}
 
