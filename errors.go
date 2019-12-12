@@ -214,7 +214,6 @@ func pad(buf *bytes.Buffer, pad string) {
 func New(args ...interface{}) *Error {
 	err := newError(args...)
 
-	updateLocation(err)
 	updateCaller(err)
 
 	return err
@@ -269,7 +268,6 @@ func Wrap(cause error, args ...interface{}) *Error {
 	err := newError(args...)
 
 	// We have to set these again, as they'll be at the wrong depth now.
-	updateLocation(err)
 	updateCaller(err)
 
 	return err
@@ -286,15 +284,10 @@ func updateCaller(err *Error) {
 
 	fun := runtime.FuncForPC(fpcs[0] - 1)
 	if fun != nil {
-		funcName := strings.Split(fun.Name(), "/")
-		err.caller = funcName[len(funcName)-1]
-	}
-}
+		li := strings.LastIndex(fun.Name(), "/") + 1
 
-// updateLocation takes an error and sets file and line information on it. Safe to use in error
-// constructors, but no deeper.
-func updateLocation(err *Error) {
-	_, file, line, _ := runtime.Caller(2)
-	err.file = file
-	err.line = line
+		funcName := fun.Name()[li:]
+		err.caller = funcName
+		err.file, err.line = fun.FileLine(fpcs[0] - 1)
+	}
 }

@@ -16,7 +16,6 @@ func Fatal(err error) {
 
 	wrapped := newError(err)
 
-	updateLocation(wrapped)
 	updateCaller(wrapped)
 
 	if v, ok := err.(*Error); ok {
